@@ -1,4 +1,4 @@
-from file import rename_and_keep_columns, add_growth_column, add_count_cleaned_column, add_growth_cleaned_column, plot_growth_histogram
+from file import rename_and_keep_columns, add_growth_column, add_count_cleaned_column, add_growth_cleaned_column, plot_growth_histogram, reformat_excel
 
 # CSVs that are properly formated, population is equivalent to count
 # csv_names = {"urban-and-rural-population":['Year','Code','Urban population'], # good example
@@ -16,24 +16,38 @@ from file import rename_and_keep_columns, add_growth_column, add_count_cleaned_c
 #               } 
 
 # CSVs that are properly formated, but need to calculate population because the count of population is cumulative
-csv_names = {"cumulative-covid-vaccinations":['Day','Code','total_vaccinations'], # right skewed
-                "people-vaccinated-covid":['Day','Code','people_vaccinated'], # right skewed
-                "cumulative-covid-vaccine-booster-doses":['Day','Code','total_boosters'], # right skewed
-                "full-list-total-tests-for-covid-19":['Day','Code','total_tests'], # right skewed
-                "us-total-covid-vaccine-doses-distributed":['Day','Entity','total_distributed'], # right skewed
-                "cumulative-co-emissions":['Year','Code','Cumulative CO₂ emissions'], # right skewed
-            }
+# csv_names = {"cumulative-covid-vaccinations":['Day','Code','total_vaccinations'], # right skewed
+#                 "people-vaccinated-covid":['Day','Code','people_vaccinated'], # right skewed
+#                 "cumulative-covid-vaccine-booster-doses":['Day','Code','total_boosters'], # right skewed
+#                 "full-list-total-tests-for-covid-19":['Day','Code','total_tests'], # right skewed
+#                 "us-total-covid-vaccine-doses-distributed":['Day','Entity','total_distributed'], # right skewed
+#                 "cumulative-co-emissions":['Year','Code','Cumulative CO₂ emissions'], # right skewed
+#             }
 
-for csv, columns in csv_names.items():
-    original_csv_path = "original_csv" + "/" + csv + ".csv"
-    modified_csv_path = "modified_csv" + "/" + csv + ".csv"
-    graph_path = "graphs" + "/" + csv
+# for csv, columns in csv_names.items():
+#     original_csv_path = "original_csv" + "/" + csv + ".csv"
+#     modified_csv_path = "modified_csv" + "/" + csv + ".csv"
+#     graph_path = "graphs" + "/" + csv
 
-    columns_to_keep_and_rename = {columns[0]: 'date', columns[1]: 'id', columns[2]:'count'}
+#     columns_to_keep_and_rename = {columns[0]: 'date', columns[1]: 'id', columns[2]:'count'}
 
-    rename_and_keep_columns(original_csv_path, columns_to_keep_and_rename, modified_csv_path)
-    # add_growth_column(modified_csv_path)
-    add_count_cleaned_column(modified_csv_path)
-    add_growth_cleaned_column(modified_csv_path)
-    plot_growth_histogram(modified_csv_path, graph_path)
+#     rename_and_keep_columns(original_csv_path, columns_to_keep_and_rename, modified_csv_path)
+#     # add_growth_column(modified_csv_path)
+#     add_count_cleaned_column(modified_csv_path)
+#     add_growth_cleaned_column(modified_csv_path)
+#     plot_growth_histogram(modified_csv_path, graph_path)
+
+# XLSX files from Sage Data
+# file_names = ["airport_arrivals_sage", "airport_departures_sage", "crop_production_sage", "commodity_balances_tobacco_sage", 
+#               "average_daily_inmate_population_sage", "peak_inmate_population_sage", "crimes_reported_sage", "recruiting_expenses_sage"
+#               "current_account_countries_sage", "expenses_countries_sage", "revenues_countries_sage", "labor_markets_countries_sage",
+#               "total_us_troop_deployment_sage", "total_federal_aid_counties_sage", "population_countries_sage", "state_government_tax_revenue_sage"]
+
+# for file in file_names:
+#     original_csv_path = "original_csv" + "/" + file + ".xlsx"
+#     modified_csv_path = "modified_csv" + "/" + file + ".xlsx"
+#     graph_path = "graphs" + "/" + file
+#     reformat_excel(original_csv_path, modified_csv_path)
+#     add_growth_column(modified_csv_path)
+#     plot_growth_histogram(modified_csv_path, graph_path)
     
