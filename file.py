@@ -1,43 +1,7 @@
-import requests
-import os
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
-
-# def download_file(url, save_path):
-#     """
-#     Download file from URL and save it to the specified path.
-#     """
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#         with open(save_path, 'wb') as f:
-#             f.write(response.content)
-#         print("File downloaded successfully.")
-#     else:
-#         print("Failed to download file.")
-
-# def open_excel_file(file_path):
-#     """
-#     Open Excel file using pandas.
-#     """
-#     try:
-#         df = pd.read_excel(file_path)
-#         print(df)
-#     except Exception as e:
-#         print("An error occurred while opening the Excel file:", e)
-
-# def main():
-#     url = input("Enter the URL of the Excel file: ")
-#     file_name = url.split('/')[-1]
-#     save_path = os.path.join(os.getcwd(), file_name)
-    
-#     download_file(url, save_path)
-#     open_excel_file(save_path)
-
-# if __name__ == "__main__":
-#     main()
 
 def rename_and_keep_columns(csv_path, columns_to_keep_and_rename, path):
     """
@@ -182,15 +146,17 @@ def plot_growth_histogram(file_path, save_path):
         # Remove rows with NaN or inf values in 'growth' column
         df = df[~df['growth'].isin([float('nan'), float('inf'), float('-inf')])]
         
+        # Calculate p1 and p99 percentiles
+        p1, p99 = np.percentile(df['growth'], [1, 99])
+
         # Plot histogram
-        plt.hist(df['growth'], bins=50, density=True, edgecolor='black', alpha=0.7, label='Histogram')
+        plt.hist(df['growth'], bins=300, density=True, edgecolor='black', alpha=0.7, label='Histogram', range=(p1, p99))
         
         # Calculate mean and standard deviation for the normal distribution curve
         mean, std_dev = np.mean(df['growth']), np.std(df['growth'])
         
         # Generate values for the normal distribution curve
-        xmin, xmax = plt.xlim()
-        x = np.linspace(xmin, xmax, 100)
+        x = np.linspace(p1, p99, 100)
         p = norm.pdf(x, mean, std_dev)
         
         # Plot normal distribution curve
@@ -418,11 +384,3 @@ def reformat_excel_dates_as_row_strip_year_remove_quarter(input_path, output_pat
 #         print("Excel file reformatted successfully. Reformatted Excel saved to:", output_path)
 #     except Exception as e:
 #         print("An error occurred:", e)
-
-# xlsx = "total_us_troop_deployment_sage"
-# original_csv_path = "original_csv" + "/" + xlsx + ".xlsx"
-# modified_csv_path = "modified_csv" + "/" + xlsx + ".xlsx"
-# graph_path = "graphs" + "/" + xlsx
-# reformat_excel_dates_as_row_strip_year_remove_quarter(original_csv_path, modified_csv_path)
-# add_growth_column(modified_csv_path)
-# plot_growth_histogram(modified_csv_path, graph_path)
